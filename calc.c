@@ -21,13 +21,19 @@
  * 
  */
  
-#include "../Headers/dumper.h"
+#include "headers/dumper.h"
+#include "headers/help.h"
+
 
 int main(){
 	float a;
 	float b;
 	char c;
+	char r;
 	
+	clear ();
+	
+	do {
 	printf("Digite o primeiro número: ");
 	scanf("%f", &a);
 	
@@ -58,9 +64,20 @@ int main(){
 	else if (c == 'x') {
 		printf("O resultado é: %.2f\n", a * b);
 	}
-	else if (c == '/'){
+	else if (c == '/') {
 		printf("O resultado é: %.2f\n", a / b);
 	}
 	
+	do {
+		dump_io(stdin);
+		printf("Deseja fazer uma nova operação, 's' para sim, 'n' para não: ");
+		scanf("%c", &r);
+	
+		if (r != 's' && r !='n') {
+			printf("Opção inválida. Digite Novamente.\n");
+		}
+	} while (r != 's' && r !='n');
+} while (r == 's');
+	printf("Bye\n");
 	return 0;
 }
