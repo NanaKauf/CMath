@@ -21,15 +21,16 @@
  * 
  */
 
-#include <stdlib.h>
 #include "headers/dumper.h"
 #include "headers/help.h"
 
 #define TRUE	1
 #define FALSE	0
 
-void ask_to_user(void){
+unsigned short int ask_to_user(void){
 	unsigned short int flag = FALSE;
+	
+	char r;
 	
 	do {
 		dump_io(stdin);
