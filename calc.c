@@ -1,42 +1,20 @@
-/*
- * calc.c
- * 
- * Copyright 2013 Janaina Flor Kaufmann <janaina@medusakauf>
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- * 
- * 
- */
+#include "../../Dropbox/GIT/headers/dumper.h"
+#include "../../Dropbox/GIT/headers/help.h"
 
-#include "headers/dumper.h"
-#include "headers/help.h"
 
 #define TRUE	1
 #define FALSE	0
 
 unsigned short int ask_to_user(void){
 	unsigned short int flag = FALSE;
-	
+
 	char r;
-	
+
 	do {
 		dump_io(stdin);
 		printf("Deseja fazer uma nova operação, 's' para sim, 'n' para não: ");
 		scanf("%c", &r);
-	
+
 		if (r == 's') {
 			clear ();
 			flag = TRUE;
@@ -47,54 +25,84 @@ unsigned short int ask_to_user(void){
 			printf("Opção inválida. Digite Novamente.\n");
 		}
 	} while (flag == FALSE);
-	
+
 	return flag;
+
+}
+
+unsigned short int testando(float *b){
+	unsigned short int test = FALSE;
+	char c;
 	
+	clear ();
+	
+	do {
+		printf("Adição: + | Subtração: - | Multiplicação: x | Divisão: / \n");
+		printf("Digite a operação a ser realizada: ");
+		scanf("%c\n", &c);
+		if (c == '/' && *b == 0) {
+			do {
+				printf("O segundo número não pode ser digitado. \n");
+				printf("Digite um número diferente de 0: ");
+				scanf("%f", b);
+			} while (*b == 0);
+		}
+		else if (c == '+' || c == '-' || c == 'x' || c == '/') {
+			clear ();
+			test = TRUE;
+		}
+		else {
+			printf("Opção inválida. Digite Novamente.\n");
+		}
+	} while (test == FALSE);
+	
+	return test;
 }
 
 int main(){
 	float a;
 	float b;
-	
+
 	char c;
 	char r;
-	
+
 	clear ();
-	
+
 	do {
-		
+
 		printf("Digite o primeiro número: ");
 		scanf("%f", &a);
-	
+
 		printf("Digite o segundo número: ");
 		scanf("%f", &b);
-	
-		dump_io(stdin);
-	
-		printf("Adição: + | Subtração: - | Multiplição: x | Divisão: / \n");
-		printf("Digite a operação a ser realizada: ");
-		scanf("%c", &c);
-	
-		if (c == '/' && b == 0) {
-			do {
-				printf("O segundo número digitado não pode ser divido. \n");
-				printf("Digite um número diferente de 0: ");	
-				scanf("%f", &b);
-			} while (b == 0);
+
+		//dump_io(stdin);
+
+		//printf("Adição: + | Subtração: - | Multiplição: x | Divisão: / \n");
+		//printf("Digite a operação a ser realizada: ");
+		//scanf("%c", &c);
+
+		//if (c == '/' && b == 0) {
+		//	do {
+		//		printf("O segundo número digitado não pode ser divido. \n");
+		//		printf("Digite um número diferente de 0: ");	
+		//		scanf("%f", &b);
+		//	} while (b == 0);
+		//}
+
+		if (testando(&b) == TRUE) {
+			if (c == '+') {
+				printf("O resultado é: %.2f\n", a + b);	
+			} else if (c == '-') {
+				printf("O resultado é: %.2f\n", a - b);
+			} else if (c == 'x') {
+				printf("O resultado é: %.2f\n", a * b);
+			} else if (c == '/') {
+				printf("O resultado é: %.2f\n", a / b);
+			}
 		}
-	
-	
-		if (c == '+') {
-			printf("O resultado é: %.2f\n", a + b);
-		} else if (c == '-') {
-			printf("O resultado é: %.2f\n", a - b);
-		} else if (c == 'x') {
-			printf("O resultado é: %.2f\n", a * b);
-		} else if (c == '/') {
-			printf("O resultado é: %.2f\n", a / b);
-		}
-	
+
 	} while ( ask_to_user () );
-	
+
 	return 0;
 }
