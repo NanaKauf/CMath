@@ -1,28 +1,6 @@
-/*
- * calc.c
- * 
- * Copyright 2008 Victor V. Flores <userx.gnu@gmail.com>
- * 
- * CMath program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- * 
- * 
- */
-
-#include "headers/dumper.h"
-#include "headers/help.h"
+#include "../Headers/dumper.h"
+#include "../Headers/help.h"
+#include <math.h>
 
 
 #define TRUE	1
@@ -36,17 +14,17 @@ unsigned short int asking_to_repeat(void){
 	dump_io (stdin);
 	do {
 		
-		printf("Deseja fazer uma nova operação, 's' para sim, 'n' para não: ");
+		printf("%s Deseja fazer uma nova operação, '%ss%s' para sim, '%sn%s' para não: %s", T_GREEN, T_RED, T_GREEN, T_RED, T_GREEN, NOTHING);
 		scanf("%c", &r);
 
 		if (r == 's') {
 			clear ();
 			flag = TRUE;
 		} else if (r == 'n') {
-			printf("Bye!\n");
+			printf("%s Bye! %s\n", T_BLUE, NOTHING);
 			return flag;
 		}else {
-			printf("Opção inválida. Digite Novamente.\n");
+			printf("%s Opção inválida. Digite Novamente. %s\n", T_RED, NOTHING);
 		}
 	} while (flag == FALSE);
 
@@ -60,26 +38,24 @@ unsigned short int operator_test(char * c, float *b){
 	dump_io(stdin);
 	do {
 
-		printf("Adição: + | Subtração: - | Multiplicação: * | Divisão: / \n");
-		printf("Digite a operação a ser realizada: ");
+		printf("%s Adição: + | Subtração: - | Multiplicação: * | Divisão: / %s\n", T_PURPLE, NOTHING);
+		printf("%s Digite a operação a ser realizada: %s", T_GREEN, NOTHING);
 		scanf("%c", c);
-		printf("\n\t DEBUG- C: %c\n", *c);
 		if (*c == '/' && *b == 0) {
 			do {
-				printf("O segundo número não pode ser dividido. \n");
-				printf("Digite um número diferente de 0: ");
+				printf("%s O segundo número não pode ser dividido. %s\n", T_RED, NOTHING);
+				printf("%s Digite um número diferente de 0: %s", T_RED, NOTHING);
 				scanf("%f", b);
 			
 			} while (*b == 0);
 			flag = TRUE;
 		}
 		else if (*c == '+' || *c == '-' || *c == '*' || *c == '/') {
-			clear ();
 			flag = TRUE;
 		}
 		else {
 			clear ();
-			printf("Opção inválida. Digite Novamente.\n");
+			printf("%s Opção inválida. Digite Novamente. %s\n", T_RED, NOTHING);
 		}
 	} while (flag == FALSE);
 	
@@ -90,6 +66,11 @@ int main(){
 
 	float a;
 	float b;
+	float e;
+	float f;
+
+	int g;
+	int d;
 
 	char c;
 	char r;
@@ -97,27 +78,57 @@ int main(){
 	clear ();
 
 	do {
+		printf("%s Opções comuns de operação digite '%s1%s', operadores não covencionais digite '%s2%s': %s", T_CYAN, T_RED, T_CYAN, T_RED, T_CYAN, NOTHING);
+		scanf("%d", &g);
 
-		printf("Digite o primeiro número: ");
-		scanf("%f", &a);
+		clear ();
 
-		printf("Digite o segundo número: ");
-		scanf("%f", &b);
+		if (g == 1) {
+			printf("%s Digite o primeiro número: %s", T_GREEN, NOTHING);
+			scanf("%f", &a);
 
-		if (operator_test(&c, &b) == TRUE) {
-			if (c == '+') {
-				printf("O resultado é: %.2f\n", a + b);	
-			} else if (c == '-') {
-				printf("O resultado é: %.2f\n", a - b);
-			} else if (c == '*') {
-				printf("O resultado é: %.2f\n", a * b);
-			} else if (c == '/') {
-				printf("O resultado é: %.2f\n", a / b);
+			printf("%s Digite o segundo número: %s", T_GREEN, NOTHING);
+			scanf("%f", &b);
+
+			if (operator_test(&c, &b) == TRUE) {
+				if (c == '+') {
+					printf("%s O resultado é: %s %.2f %s\n", T_CYAN, T_RED, a + b, NOTHING);
+				} else if (c == '-') {
+					printf("%s O resultado é: %s %.2f %s\n", T_CYAN, T_RED, a - b, NOTHING);
+				} else if (c == '*') {
+					printf("%s O resultado é: %s %.2f %s\n", T_CYAN, T_RED, a * b, NOTHING);
+				} else if (c == '/') {
+					printf("%s O resultado é: %s %.2f %s\n", T_CYAN, T_RED, a / b, NOTHING);
+				}
 			}
+		} else if (g == 2) {
+			printf("%s Exponencial: 1 |Raiz Quadrada: 2 |Logaritimo: 3 |Logaritimo 10: 4 |Resto da Divisão: 5 %s \n", T_PURPLE, NOTHING);
+			printf("%s Digite a operação a ser realizada: %s", T_GREEN, NOTHING);
+			scanf("%d", &d);
+
+			clear ();
+
+			if (d == 1) {
+				printf("%s Digite a base: %s", T_GREEN, NOTHING);
+				scanf("%f", &e);
+
+				printf("%s Digite o expoente: %s", T_GREEN, NOTHING);
+				scanf("%f", &f);
+				
+				printf("%s O resultado é:%s %.2f %s\n", T_CYAN, T_RED, pow(e,f), NOTHING);
+			} else if (d == 2) {
+				printf("%s Digite o número: %s", T_GREEN, NOTHING);
+				scanf("%f", &e);
+
+				printf("O resultado é: %.2f \n", T_CYAN, T_RED, sqrt(e), NOTHING);
+			} else if (d == 3) {
+				printf("%s Digite um número: %s", T_GREEN, NOTHING);
+				scanf("%f", &e);
+			}
+			
 		}
 
 	} while ( asking_to_repeat () );
 
 	return 0;
 }
-
